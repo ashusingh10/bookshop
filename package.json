@@ -50,8 +50,11 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "sql",
-        "model": "*"
+        "kind": "sqlite",
+        "model": "*",
+        "credentials": {
+          "database": "bookshop.db"
+        }
       }
     },
     "hana": {
@@ -59,7 +62,6 @@
     }
   },
   "sapux": [
-    "app/project1",
     "app/bookshop"
   ]
 }

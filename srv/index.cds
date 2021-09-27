@@ -5,15 +5,15 @@ annotate CatalogService.Books with @(
 UI:{
      Identification: [{Value: title}],
     
-     SelectionFields: [title,author.name,author_ID],
+     SelectionFields: [title,authorName,author_ID],
     LineItem:[
         {Value: ID},
         {Value: title},
-       {Value: author.name},
+       {Value: authorName},
         {Value: author_ID},
         {Value: stock}
  
-         //{$Type: 'UI.DataField',Value: ID, Label: '{i18n>ID}'},
+        //{$Type: 'UI.DataField',Value: ID, Label: '{i18n>ID}'},
         // {$Type: 'UI.DataField',Value: title, Label: '{i18n>Book Title}'},
         // {$Type: 'UI.DataField',Value: author.name, Label: '{i18n>Author Name}'},
         // {$Type: 'UI.DataField',Value: author_ID, Label: '{i18n>Author ID}'},
@@ -31,12 +31,17 @@ UI:{
      Facets: [
             {$Type: 'UI.ReferenceFacet', Label: '{i18n>General}', Target: '@UI.FieldGroup#General'},
             {$Type: 'UI.ReferenceFacet', Label: '{i18n>Details}',Target: '@UI.FieldGroup#Details'},
+            {
+                $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>BookList of Author}',
+                Target : 'author/books/@UI.LineItem'
+            },
         ],
         FieldGroup#General: {
             Data: [
                 //{Value: ID, Label:'{i18n>Book ID}'},
                 {Value: title},
-                {Value: author_ID,Label:'{i18n>Author ID}'},
+              //{Value: author_ID,Label:'{i18n>Author ID}'},
               //{Value: author.name,Label:'{i18n>Author Name}'},   
                  {Value: author.name,Label:'{i18n>Author Name}'},
  
@@ -77,6 +82,10 @@ annotate CatalogService.Books with {
         }
     });
 }
+
+
+
+
 
 annotate CatalogService.Books with {
     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
@@ -136,40 +145,42 @@ annotate CatalogService.Authors with {
 
 /////////////////Authors////////////////////////////////////
 
-// annotate CatalogService.Authors with @odata.draft.enabled;
-// annotate CatalogService.Authors with @(
-// UI:{
-//     Identification: [{Value: ID}],
-//     SelectionFields: [ID, name],
-//     LineItem:[
-//         {Value: ID},
-//         {Value: name},
+annotate CatalogService.Authors with @odata.draft.enabled;
+annotate CatalogService.Authors with @(
+UI:{
+    Identification: [{Value: ID}],
+    SelectionFields: [ID, name],
+    LineItem:[
+        {Value: ID},
+        {Value: name},
       
-//     ],
+    ],
 
-//      Facets: [
-//             {$Type: 'UI.ReferenceFacet', Label: '{i18n>General}', Target: '@UI.FieldGroup#General'},
-//         ],
-//         FieldGroup#General: {
-//             Data: [
-//                 {Value: ID, Label:'{i18n>Book ID}'},
-//                 {Value: name},
+     Facets: [
+            {$Type: 'UI.ReferenceFacet', Label: '{i18n>General}', Target: '@UI.FieldGroup#General'},
+            {$Type: 'UI.ReferenceFacet', Label: '{i18n>BookList of Author}', Target: 'books/@UI.LineItem'},
+
+        ],
+        FieldGroup#General: {
+            Data: [
+               // {Value: ID, Label:'{i18n>Book ID}'},
+                {Value: name},
                 
-//             ]
-//         },
+            ]
+        },
     
     
-//     HeaderInfo:{
-//         TypeName: '{i18n>Authors}',
-//         TypeNamePlural: '{i18n>Authors}',
-//         Title: {Value:name},
-//         Description: {Value:ID}
-//     }
+    HeaderInfo:{
+        TypeName: '{i18n>Authors}',
+        TypeNamePlural: '{i18n>Authors}',
+        Title: {Value:ID},
+        Description: {Value:name}
+    }
     
-//     }
-// );
+    }
+);
 
-// // annotate CatalogService.Authors with {
-// //     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
-// //     name @title:'{i18n>AuthorName}';
-// //  } 
+// annotate CatalogService.Authors with {
+//     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
+//     name @title:'{i18n>AuthorName}';
+//  } 

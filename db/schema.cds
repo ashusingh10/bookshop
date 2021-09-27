@@ -1,11 +1,12 @@
 namespace my.bookshop;
 
-using { cuid, managed } from '@sap/cds/common';
+using { cuid, managed, Country } from '@sap/cds/common';
 
 entity Books{
     key ID : UUID @odata.Type:'Edm.String';
     title : String;
     stock : Integer;
+    country: Country;
     author : Association to  Authors;
 }
 
@@ -18,5 +19,7 @@ entity Authors {
  entity Orders : cuid, managed {
      book : Association to Books;
     quantity : Integer;
- }    
+ }   
+
+
  
