@@ -7,6 +7,11 @@ service CatalogService @(impl: 'srv/cat-service.js'){
         *, author.name as authorName
     };
    
+   @readonly
+   entity StatusCode as projection on my.MyBookStatus;
+
+
+
      @Capabilities : { Insertable: true, Deletable:true }
     entity Authors as projection on my.Authors;
 

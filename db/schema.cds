@@ -7,7 +7,17 @@ entity Books{
     title : String;
     stock : Integer;
     country: Country;
+    status : BookStatus;
     author : Association to  Authors;
+
+}
+
+type BookStatus : String enum{
+    InLibrary;OnDemand;
+}
+
+entity MyBookStatus{
+    key code: String;
 }
 
 entity Authors {

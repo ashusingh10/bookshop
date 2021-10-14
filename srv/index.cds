@@ -6,18 +6,37 @@ UI:{
      Identification: [{Value: title}],
     
      SelectionFields: [title,authorName,author_ID],
-    LineItem:[
-        {Value: ID},
-        {Value: title},
-       {Value: authorName},
-        {Value: author_ID},
-        {Value: stock}
- 
-        //{$Type: 'UI.DataField',Value: ID, Label: '{i18n>ID}'},
-        // {$Type: 'UI.DataField',Value: title, Label: '{i18n>Book Title}'},
-        // {$Type: 'UI.DataField',Value: author.name, Label: '{i18n>Author Name}'},
-        // {$Type: 'UI.DataField',Value: author_ID, Label: '{i18n>Author ID}'},
-        // {$Type: 'UI.DataField',Value: stock,Label: '{i18n>Book Stock}'}
+    LineItem:[ 
+        {
+            $Type: 'UI.DataField',
+            Value: ID, 
+            Label: '{i18n>ID}'
+            },
+        {
+            $Type: 'UI.DataField',
+            Value: title, 
+            Label: '{i18n>Book Title}'
+            },
+        {
+            $Type: 'UI.DataField',
+            Value: author.name, 
+            Label: '{i18n>Author Name}'
+            },
+        {
+            $Type: 'UI.DataField',
+            Value: author_ID, 
+            Label: '{i18n>Author ID}'
+            },
+        {
+            $Type: 'UI.DataField',
+            Value: stock,
+            Label: '{i18n>Book Stock}'
+            },
+        // {
+        //     $Type: 'UI.DataField',
+        //     Value: status,
+        //     Label: '{i18n>Book Status}'
+        //     }
  
     ],
     HeaderInfo:{
@@ -29,8 +48,14 @@ UI:{
     },
  
      Facets: [
-            {$Type: 'UI.ReferenceFacet', Label: '{i18n>General}', Target: '@UI.FieldGroup#General'},
-            {$Type: 'UI.ReferenceFacet', Label: '{i18n>Details}',Target: '@UI.FieldGroup#Details'},
+            {$Type: 'UI.ReferenceFacet', 
+            Label: '{i18n>General}', 
+            Target: '@UI.FieldGroup#General'
+            },
+            {$Type: 'UI.ReferenceFacet', 
+            Label: '{i18n>Details}',
+            Target: '@UI.FieldGroup#Details'
+            },
             {
                 $Type  : 'UI.ReferenceFacet',
                 Label  : '{i18n>BookList of Author}',
@@ -41,7 +66,7 @@ UI:{
             Data: [
                 //{Value: ID, Label:'{i18n>Book ID}'},
                 {Value: title},
-              //{Value: author_ID,Label:'{i18n>Author ID}'},
+                {Value: author_ID,Label:'{i18n>Author ID}'},
               //{Value: author.name,Label:'{i18n>Author Name}'},   
                  {Value: author.name,Label:'{i18n>Author Name}'},
  
@@ -51,6 +76,7 @@ UI:{
         FieldGroup#Details: {
             Data: [
                 {Value: stock,Label:'{i18n>Book Stock}'},
+                {Value: status,Label:'{i18n>Book Status}'},
             ]
         },
 },
@@ -85,6 +111,33 @@ annotate CatalogService.Books with {
 
 
 
+annotate CatalogService.Books with{
+    status @(
+        sap.value.list:'fixed-values',
+        Common : {
+            FieldControl : #Mandatory,
+            Text : status,
+            TextArrangement : #TextOnly,
+            ValueList : {
+                $Type : 'Common.ValueListType',
+                CollectionPath : 'StatusCode',
+                Label : 'Book Status',
+                SearchSupported: true,
+                Parameters :[
+                    {
+                    $Type : 'Common.ValueListParameterOut',
+                    LocalDataProperty : 'status',
+                    ValueListProperty : 'code'
+                    }
+                ]
+            },
+        }
+    )
+};
+
+
+
+
 
 
 annotate CatalogService.Books with {
@@ -102,43 +155,6 @@ annotate CatalogService.Authors with {
 
 
 
-
-///////////////////////////////////////////////////////////////////////////////////////    
-// UI:{
-//     Identification: [{Value: title}],
-//     SelectionFields: [title, author.name],
-//     LineItem:[
-//         {Value: ID},
-//         {Value: title},
-//         {Value: author.name},
-//        // {Value: author_ID},
-//         {Value: stock}
-//     ],
-    
-//     HeaderInfo:{
-//         TypeName: '{i18n>Books}',
-//         TypeNamePlural: '{i18n>Books}',
-//         Title: {Value: title},
-//         Description: {Value: author.name}
-//     }
-    
-//     }
-// );
-// // {
-// //    @ValueList.entity:'Authors',
-// // };
- 
-// annotate CatalogService.Books with {
-//     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
-//     title @title:'{i18n>Title}';
-//     author @title:'{i18n>AuthorID}';
-//     stock @title:'{i18n>Stock}';
-// }
- 
-// annotate CatalogService.Authors with {
-//     ID @title:'{i18n>ID}' @UI.HiddenFilter @Core.Computed;
-//     name @title:'{i18n>AuthorName}';
-//  } 
 
 
 
